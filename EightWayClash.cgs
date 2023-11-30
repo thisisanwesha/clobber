@@ -1,4 +1,4 @@
-singleton class f_bishop2 extends game.grid.GridRuleset
+singleton class EightWayClash extends game.grid.GridRuleset
 
   // Define a nested class to represent specific positions
   class Position(grid as Grid) extends GridGame
