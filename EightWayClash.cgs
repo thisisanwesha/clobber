@@ -1,0 +1,35 @@
+singleton class f_bishop2 extends game.grid.GridRuleset
+
+  // Define a nested class to represent specific positions
+  class Position(grid as Grid) extends GridGame
+
+    // Define the options of this position
+    override def Options(player as Player) begin
+
+      var us := player.Ordinal;
+      var them := player.Opponent.Ordinal;
+
+      for coord in (grid FindAll us)              // For each coordinate that matches the player's color ...
+      for direction in Coordinates.Compass        // ... and for every 8 directions ...
+      where grid[coord + direction] == them       // ... such that an opposing stone is adjacent in that direction ...
+      yield
+        // Generate an option by updating the grid, replacing the stone at
+        // `coord` with an empty space and the stone at `coord + direction`
+        // with a stone of the player's color.
+        Position(grid Updated { coord => 0, coord + direction => us })
+      end
+
+    end
+
+  end
+
+  // Define the characters used to represent blank spaces, black stones,
+  // and white stones when Clobber positions are created
+  override def CharMap := ".xo";
+
+  // Define the icons used to display blank spaces, black stones, and
+  // white stones when Clobber positions are displayed
+  override def Icons := [Icon.Blank, Icon.BlackQueen, Icon.WhiteQueen];
+
+end
+
